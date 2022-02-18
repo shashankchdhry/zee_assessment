@@ -6,13 +6,14 @@ import java.util.List;
 import java.util.Optional;
 
 import com.learning.dto.Food;
+import com.learning.exception.FoodTypeNotFoundException;
 import com.learning.exception.IdNotFoundException;
 
 public interface FoodService {
 
 	public Food add(Food food) throws IdNotFoundException;
 
-	public Food update(int id, Food food) throws IdNotFoundException;
+	public Food update(Food food) throws IdNotFoundException;
 
 	public Food getFoodById(int id) throws IdNotFoundException;
 
@@ -21,5 +22,8 @@ public interface FoodService {
 	public String deleteFoodById(int id) throws IdNotFoundException;
 
 	public Optional<List<Food>> getAllFoodDetails();
+
+	Food[] getAllFoodsByFoodType(String foodType) throws FoodTypeNotFoundException;
+
 
 }

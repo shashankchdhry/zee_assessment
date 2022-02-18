@@ -1,5 +1,6 @@
 package com.learning.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.learning.dto.Food;
+import com.learning.exception.FoodTypeNotFoundException;
 import com.learning.exception.IdNotFoundException;
 import com.learning.repo.FoodRepository;
 import com.learning.service.FoodService;
@@ -29,7 +31,7 @@ public class FoodServiceImpl implements FoodService {
 
 //update
 	@Override
-	public Food update(int id, Food food) throws IdNotFoundException {
+	public Food update(Food food) throws IdNotFoundException {
 		return foodRepository.save(food);
 	}
 
@@ -75,6 +77,23 @@ public class FoodServiceImpl implements FoodService {
 	@Override
 	public Optional<List<Food>> getAllFoodDetails() {
 		return Optional.ofNullable(foodRepository.findAll());
+	}
+
+	@SuppressWarnings("null")
+	@Override
+	public Food[] getAllFoodsByFoodType(String foodType) throws FoodTypeNotFoundException {
+		List<Food> foodItems = foodRepository.findAll();
+		List<Food> temp = new ArrayList<Food>();
+		for (Food foodItems2 : foodItems) {
+			if (foodItems2.getFoodType().toString().equals(foodType)) {
+				temp.add(foodItems2);
+			}
+		}
+		if (temp.isEmpty()) {
+			throw new FoodTypeNotFoundException("Sorry Food Type Not Found");
+		}
+		Food[] array = new Food[temp.size()];
+		return temp.toArray(array);
 	}
 
 }

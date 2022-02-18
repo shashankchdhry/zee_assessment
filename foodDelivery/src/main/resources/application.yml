@@ -10,9 +10,14 @@ spring:
         dialect:  org.hibernate.dialect.MySQL8Dialect
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 server:
-  port: 0
+  port: 61742
   servlet:
     context-path: /api
+
+zee5assessment:
+  app:
+    jwtSecret: secretkey
+    jwtExpirationMs: 86400000
 
